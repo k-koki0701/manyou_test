@@ -1,12 +1,12 @@
 # Readme
 
-| Users | 
+| Users |
 | ---- |
 | name:string |  
 | email:string |
 | password:string |
 
-| Tasks | 
+| Tasks |
 | ---- |
 | task_name:string |  
 | task_detail:text |
@@ -14,6 +14,6 @@
 | status:string |  
 | priority:string |
 
-| Labels | 
+| Labels |
 | ---- |
 | label_name:string |
