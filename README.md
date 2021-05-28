@@ -1,26 +1,19 @@
-# README
+# Readme
 
-# usersテーブル
-|Column|Type|Options|
-|name|string||
-|email|string||
-|password|string||
-|password confirmation|string||
+| Users | 
+| ---- |
+| name:string |  
+| email:string |
+| password:string |
 
-# tasksテーブル
-|Column|Type|Options|
-|task_name|string||
-|task_detail|string||
-|end_period|string||
-|status|string||
-|priority|string||
-|user_id|integer||
+| Tasks | 
+| ---- |
+| task_name:string |  
+| task_detail:text |
+| end_period:string |
+| status:string |  
+| priority:string |
 
-# labelsテーブル
-|Column|Type|Options|
-|label_name|string||
-
-# task_labelsテーブル
-|Column|Type|Options|
-|task_id|integer||
-|label_id|integer||
+| Labels | 
+| ---- |
+| label_name:string |
