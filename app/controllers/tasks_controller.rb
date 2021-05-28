@@ -1,4 +1,8 @@
 class TasksController < ApplicationController
+  def index
+    @tasks = Task.all.order(id: "DESC")
+  end
+
   def new
     @task = Task.new
   end
@@ -9,7 +13,7 @@ class TasksController < ApplicationController
   end
 
   private
-  task_params
+  def task_params
     params.require(:task).permit(:task_name, :task_detail)
   end
 end
