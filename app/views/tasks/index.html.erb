@@ -6,7 +6,7 @@
   <tr>
     <th>タスク名</th>
     <th>詳細</th>
-    <th>終了期限</th>
+    <th>終了期限<%= link_to "終了期限でソートする", tasks_path(sort_expired: "true"), class: "dropdown-item" %></th>
   </tr>
 <% @tasks.each do |task| %>
   <tr>
