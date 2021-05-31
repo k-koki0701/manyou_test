@@ -6,11 +6,13 @@
   <tr>
     <th>タスク名</th>
     <th>詳細</th>
+    <th>終了期限</th>
   </tr>
 <% @tasks.each do |task| %>
   <tr>
     <td class="task_row"><%= task.task_name %></td>
     <td><%= task.task_detail %></td>
+    <td><%= task.end_period.strftime("%Y-%m-%d") %></td>
     <td><%= link_to '詳細', task_path(task.id) %></td>
     <td><%= link_to "編集", edit_task_path(task.id) %></td>
     <td><%= link_to '削除', task_path(task.id), method: :delete ,data: { confirm: '本当に削除していいですか？' } %></td>

@@ -10,14 +10,18 @@
     </div>
   <% end %>
   <div class = "task_list">
-  <div class="task_name">
-    <%= form.label :タスク名 %>
-    <%= form.text_field :task_name %>
-  </div>
-  <div class="task_detail">
-    <%= form.label :詳細 %>
-    <%= form.text_area :task_detail %>
-  </div>
+    <div class="task_name">
+      <%= form.label :タスク名 %>
+      <%= form.text_field :task_name %>
+    </div>
+    <div class="task_detail">
+      <%= form.label :詳細 %>
+      <%= form.text_area :task_detail %>
+    </div>
+    <div class="end_period">
+      <%= form.label :終了期限 %>
+      <%= form.date_select :end_period %>
+    </div>
   </div>
   <%= form.submit button_text%>
 <% end %>
