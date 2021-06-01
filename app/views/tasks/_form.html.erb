@@ -22,6 +22,10 @@
       <%= form.label :終了期限 %>
       <%= form.date_select :end_period %>
     </div>
+    <div class="status">
+      <%= form.label :ステータス %>
+      <%= form.select :status, [["未着手", "未着手"], ["着手中", "着手中"], ["完了", "完了"]], include_blank: "選択して下さい" %>
+    </div>
   </div>
   <%= form.submit button_text%>
 <% end %>
