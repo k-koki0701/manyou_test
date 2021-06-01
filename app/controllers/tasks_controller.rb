@@ -5,8 +5,14 @@ class TasksController < ApplicationController
     @tasks = Task.all.order(created_at: "DESC")
     if params[:sort_expired]
       @tasks = Task.order('end_period DESC')
+    elsif params[:task_name].present? && params[:status].present?
+      @tasks = Task.where('task_name LIKE(?)', "%#{params[:task_name]}%").where(status: params[:status])
+    elsif params[:task_name].present?
+      @tasks = Task.search_task_name("%#{params[:task_name]}%")
+    elsif params[:status].present?
+      @tasks = Task.where(status: params[:status])
     else
-      @tasks
+      @tasks = Task.all.order(created_at: "DESC")
     end
   end
 
