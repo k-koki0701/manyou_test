@@ -12,11 +12,11 @@
   <div class = "task_row">
     <div class="task_name">
       <%= form.label :タスク名 %>
-      <%= form.text_field :task_name %>
+      <%= form.text_field :task_name, id: 'task_name' %>
     </div>
     <div class="task_detail">
       <%= form.label :詳細 %>
-      <%= form.text_area :task_detail %>
+      <%= form.text_area :task_detail, id: 'task_detail' %>
     </div>
     <div class="end_period">
       <%= form.label :終了期限 %>

@@ -5,8 +5,12 @@ RSpec.describe 'タスク管理機能', type: :system do
       it '作成したタスクが表示される' do
         visit new_task_path
 
-        fill_in 'task_task_name', with: 'task'
-        fill_in 'task_task_detail', with: 'task'
+        fill_in 'task_name', with: 'task'
+        fill_in 'task_detail', with: 'task'
+        find(".end_period").find("#task_end_period_1i").select '2021'
+        find(".end_period").find("#task_end_period_2i").select '6月'
+        find(".end_period").find("#task_end_period_3i").select '1'
+        find(".status").find("#task_status").select '完了'
 
         click_on '登録する'
 
