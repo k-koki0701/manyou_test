@@ -40,12 +40,22 @@ RSpec.describe 'タスク管理機能', type: :system do
     end
     context '終了期限で降順のソートを実行した場合' do
       it '終了期限の一番遅いタスクが一番上に表示される' do
-        FactoryBot.create(:task, task_name: 'task', task_detail: 'task', end_period: Date.today)
-        FactoryBot.create(:task, task_name: 'task2', task_detail: 'task2', end_period: Date.today - 1)
+        FactoryBot.create(:task)
+        FactoryBot.create(:second_task)
         visit tasks_path
         find('.sort_period').click
         task_end_period = all('.task_row')
         expect(task_end_period[0]).to have_content 'task'
+      end
+    end
+    context '優先順位で昇順のソートを実行した場合' do
+      it '優先順位の高いタスクが一番上に表示される' do
+        FactoryBot.create(:task)
+        FactoryBot.create(:second_task)
+        visit tasks_path
+        find('.sort_priority').click
+        task_priority = all('.task_row')
+        expect(task_priority[0]).to have_content 'task'
       end
     end
   end
