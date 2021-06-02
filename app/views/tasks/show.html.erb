@@ -1,5 +1,9 @@
-<h1>タスク詳細</h1>
-<p>タスク名: <%= @task.task_name %></p>
-<p>詳細: <%= @task.task_detail %></p>
-
-<%= link_to "タスク一覧にもどる", tasks_path %>
+<div class="task_detail_list">
+  <h1>タスク詳細</h1>
+  <p>タスク名: <%= @task.task_name %></p>
+  <p>詳細: <%= @task.task_detail %></p>
+  <p>終了期限: <%= @task.end_period.strftime("%Y-%m-%d") %></p>
+  <p>ステータス: <%= @task.status %></p>
+  <p>優先順位: <%= @task.priority %></p>
+</div>
+<%= link_to "タスク一覧へ", tasks_path, class:"btn btn-info to_task_list" %>

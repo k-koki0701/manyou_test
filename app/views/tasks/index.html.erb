@@ -5,18 +5,20 @@
 <%= form_with(method: :get, local: true) do |f| %>
   <div class="field">
     <%= f.label :タスク名%>
-    <%= f.text_field :task_name, placeholder: "検索..." %>
+    <%= f.text_field :task_name, placeholder: "検索..." ,:size=>"60"%>
+    <%= f.label :ステータス %>
     <%= f.select :status, [["未着手", "未着手"], ["着手中", "着手中"], ["完了", "完了"]], {include_blank: ''} %>
-    <%= f.submit :検索 %>
+    <%= f.submit :検索 , class:"btn-default"%>
   </div>
+  <%= link_to '新規登録', new_task_path, class:"btn btn-info" %>
 <% end %>
-<table>
-  <tr>
+<table class='table table-hover'>
+  <tr class="dropdown">
     <th>タスク名</th>
     <th>詳細</th>
-    <th>終了期限<%= link_to "終了期限でソートする", tasks_path(sort_expired: "true"), class: "sort_period" %></th>
+    <th>終了期限<%= link_to "遅い順", tasks_path(sort_expired: "true"), class: "sort_period btn-primary" %></th>
     <th>ステータス</th>
-    <th>優先順位<%= link_to "優先順位でソートする", tasks_path(sort_priority: "true"), class: "sort_priority" %></th>
+    <th>優先順位<%= link_to "高い順", tasks_path(sort_priority: "true"), class: "sort_priority btn-primary" %></th>
   </tr>
 <% @tasks.each do |task| %>
   <tr>
@@ -25,13 +27,11 @@
     <td><%= task.end_period.strftime("%Y-%m-%d") %></td>
     <td><%= task.status %></td>
     <td><%= task.priority %></td>
-    <td><%= link_to '詳細', task_path(task.id) %></td>
-    <td><%= link_to "編集", edit_task_path(task.id) %></td>
-    <td><%= link_to '削除', task_path(task.id), method: :delete ,data: { confirm: '本当に削除していいですか？' } %></td>
+    <td><%= link_to '詳細', task_path(task.id), class:"btn-success" %></td>
+    <td><%= link_to "編集", edit_task_path(task.id), class:"btn-warning" %></td>
+    <td><%= link_to '削除', task_path(task.id), method: :delete ,data: { confirm: '本当に削除していいですか？' }, class:"btn-danger" %></td>
   </tr>
 <% end %>
 </table>
 
 <%= paginate @tasks %>
-
-<%= link_to '新しくタスクを登録する', new_task_path %>

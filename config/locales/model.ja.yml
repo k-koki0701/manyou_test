@@ -5,11 +5,11 @@ ja:
       user: ユーザー
     attributes:
       task:
-        task_name: タイトル
+        task_name: タスク名
         task_detail: 詳細
-        end_period:
-        status:
-        priority:
+        end_period: 終了期限
+        status: ステータス
+        priority: 優先順位
       user:
         name: 名前
         email: メールアドレス
