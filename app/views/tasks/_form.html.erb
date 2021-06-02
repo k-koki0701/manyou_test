@@ -9,16 +9,28 @@
       </ul>
     </div>
   <% end %>
-  <div class = "task_list">
-  <div class="task_name">
-    <%= form.label :タスク名 %>
-    <%= form.text_field :task_name %>
+  <div id = "task_row">
+    <div class="task_name">
+      <%= form.label :タスク名 %><br>
+      <%= form.text_field :task_name, id: 'task_name'%>
+    </div>
+    <div class="task_detail">
+      <%= form.label :詳細 %><br>
+      <%= form.text_area :task_detail, id: 'task_detail' %>
+    </div>
+    <div class="end_period">
+   　  <%= form.label :終了期限 %><br>
+      <%= form.date_select :end_period %>
+    </div>
+    <div class="status">
+      <%= form.label :ステータス %><br>
+      <%= form.select :status, [["未着手", "未着手"], ["着手中", "着手中"], ["完了", "完了"]], include_blank: "" %>
+    </div>
+    <div class="priority">
+      <%= form.label :優先順位 %><br>
+      <%= form.select :priority, Task.priorities.keys.to_a , include_blank: "" %>
+    </div>
+  　<%= form.submit button_text, class:"submit"%>
   </div>
-  <div class="task_detail">
-    <%= form.label :詳細 %>
-    <%= form.text_area :task_detail %>
-  </div>
-  </div>
-  <%= form.submit button_text%>
 <% end %>
-<%= link_to "タスク一覧にもどる", tasks_path %>
+　<%= link_to "タスク一覧へ", tasks_path, class:"btn btn-info to_task_list" %>

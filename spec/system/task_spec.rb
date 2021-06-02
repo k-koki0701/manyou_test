@@ -5,8 +5,12 @@ RSpec.describe 'タスク管理機能', type: :system do
       it '作成したタスクが表示される' do
         visit new_task_path
 
-        fill_in 'task_task_name', with: 'task'
-        fill_in 'task_task_detail', with: 'task'
+        fill_in 'task_name', with: 'task'
+        fill_in 'task_detail', with: 'task'
+        find(".end_period").find("#task_end_period_1i").select '2021'
+        find(".end_period").find("#task_end_period_2i").select '6月'
+        find(".end_period").find("#task_end_period_3i").select '1'
+        find(".status").find("#task_status").select '完了'
 
         click_on '登録する'
 
@@ -34,6 +38,26 @@ RSpec.describe 'タスク管理機能', type: :system do
         expect(task_list[1]).to have_content 'task'
       end
     end
+    context '終了期限で降順のソートを実行した場合' do
+      it '終了期限の一番遅いタスクが一番上に表示される' do
+        FactoryBot.create(:task)
+        FactoryBot.create(:second_task)
+        visit tasks_path
+        find('.sort_period').click
+        task_end_period = all('.task_row')
+        expect(task_end_period[0]).to have_content 'task'
+      end
+    end
+    context '優先順位で昇順のソートを実行した場合' do
+      it '優先順位の高いタスクが一番上に表示される' do
+        FactoryBot.create(:task)
+        FactoryBot.create(:second_task)
+        visit tasks_path
+        find('.sort_priority').click
+        task_priority = all('.task_row')
+        expect(task_priority[0]).to have_content 'task'
+      end
+    end
   end
   describe '詳細表示機能' do
      context '任意のタスク詳細画面に遷移した場合' do
@@ -45,5 +69,44 @@ RSpec.describe 'タスク管理機能', type: :system do
         expect(page).to have_content 'task'
        end
      end
+  end
+  describe 'タスク管理機能', type: :system do
+    describe '検索機能' do
+      before do
+        FactoryBot.create(:task)
+        FactoryBot.create(:second_task)
+      end
+      context 'タイトルであいまい検索をした場合' do
+        it "検索キーワードを含むタスクで絞り込まれる" do
+          visit tasks_path
+          fill_in 'task_name', with: 'task'
+
+          click_on '検索'
+
+          expect(page).to have_content 'task'
+        end
+      end
+      context 'ステータス検索をした場合' do
+        it "ステータスに完全一致するタスクが絞り込まれる" do
+          visit tasks_path
+          find("#status").select '未着手'
+
+          click_on '検索'
+
+          expect(page).to have_content '未着手'
+        end
+      end
+      context 'タイトルのあいまい検索とステータス検索をした場合' do
+        it "検索キーワードをタイトルに含み、かつステータスに完全一致するタスク絞り込まれる" do
+          visit tasks_path
+          fill_in 'task_name', with: 'task'
+          find("#status").select '未着手'
+
+          click_on '検索'
+
+          expect(page).to have_content 'task'
+        end
+      end
+    end
   end
 end

@@ -3,6 +3,20 @@ class TasksController < ApplicationController
 
   def index
     @tasks = Task.all.order(created_at: "DESC")
+    if params[:sort_expired]
+      @tasks = Task.order('end_period DESC')
+    elsif params[:sort_priority]
+      @tasks = Task.order('priority ASC')
+    elsif params[:task_name].present? && params[:status].present?
+      @tasks = Task.search_task_name("%#{params[:task_name]}%").search_status(params[:status])
+    elsif params[:task_name].present?
+      @tasks = Task.search_task_name("%#{params[:task_name]}%")
+    elsif params[:status].present?
+      @tasks = Task.search_status(params[:status])
+    else
+      @tasks = Task.all.order(created_at: "DESC")
+    end
+    @tasks = @tasks.page(params[:page]).per(15)
   end
 
   def new
@@ -42,7 +56,7 @@ class TasksController < ApplicationController
 
   private
   def task_params
-    params.require(:task).permit(:task_name, :task_detail)
+    params.require(:task).permit(:task_name, :task_detail, :end_period, :status, :priority)
   end
 
   def set_task
