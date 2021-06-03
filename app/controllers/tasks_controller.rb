@@ -1,22 +1,23 @@
 class TasksController < ApplicationController
+  # before_action :current_user, only:[:edit, :update, :destroy]
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   def index
-    @tasks = Task.all.order(created_at: "DESC")
+    @tasks = current_user.tasks.order(created_at:"DESC")
     if params[:sort_expired]
-      @tasks = Task.order('end_period DESC')
+      @tasks = current_user.tasks.order('end_period DESC')
     elsif params[:sort_priority]
-      @tasks = Task.order('priority ASC')
+      @tasks = current_user.tasks.order('priority ASC')
     elsif params[:task_name].present? && params[:status].present?
-      @tasks = Task.search_task_name("%#{params[:task_name]}%").search_status(params[:status])
+      @tasks = @tasks.search_task_name("%#{params[:task_name]}%").search_status(params[:status])
     elsif params[:task_name].present?
-      @tasks = Task.search_task_name("%#{params[:task_name]}%")
+      @tasks = @tasks.search_task_name("%#{params[:task_name]}%")
     elsif params[:status].present?
-      @tasks = Task.search_status(params[:status])
+      @tasks = @tasks.search_status(params[:status])
     else
-      @tasks = Task.all.order(created_at: "DESC")
+      @tasks = current_user.tasks.order(created_at: "DESC")
     end
-    @tasks = @tasks.page(params[:page]).per(15)
+    @tasks = @tasks.page(params[:page]).per(10)
   end
 
   def new
@@ -24,7 +25,7 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = Task.new(task_params)
+    @task = current_user.tasks.build(task_params)
   if @task.save
     flash[:notice] = "タスクを登録しました"
     redirect_to tasks_path
@@ -61,6 +62,7 @@ class TasksController < ApplicationController
 
   def set_task
     @task = Task.find(params[:id])
+    # @task = current_user.tasks.find(params[:id])
   end
 
 end
