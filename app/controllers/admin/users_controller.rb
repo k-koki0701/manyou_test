@@ -1,6 +1,7 @@
 class Admin::UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  skip_before_action :login_required
+  # skip_before_action :login_required
+  before_action :admin_user
 
   def index
     @users = User.all.select(:id, :name, :email)
@@ -44,10 +45,17 @@ class Admin::UsersController < ApplicationController
   private
   def user_params
     params.require(:user).permit(:name, :email, :password,
-                                 :password_confirmation)
+                                 :password_confirmation, :admin)
   end
 
   def set_user
     @user = User.find(params[:id])
+  end
+
+  def admin_user
+    unless current_user.admin?
+      redirect_to tasks_path
+      flash[:notice] = '権限のないユーザーです'
+    end
   end
 end

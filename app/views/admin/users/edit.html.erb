@@ -23,6 +23,8 @@
           <tr>
             <td><%= f.password_field :password_confirmation, placeholder: "パスワード(再確認)" %></td>
           </tr>
+             <%= f.label :管理者権限 %>
+             <%= f.select :admin, [[false, false], [true, true]], include_blank: "" %>
           <tr>
             <%= f.submit button_text, class:"submit"%>
           </tr>

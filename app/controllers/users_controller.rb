@@ -26,4 +26,16 @@ class UsersController < ApplicationController
     params.require(:user).permit(:name, :email, :password,
                                  :password_confirmation)
   end
+
+  def fobid_login_user
+    if @current_user.id !=  params[:id].to_i
+      redirect_to tasks_path
+    end
+  end
+
+  def logging_in_not_newly_registration
+    if current_user
+      redirect_to tasks_path
+    end
+  end
 end
