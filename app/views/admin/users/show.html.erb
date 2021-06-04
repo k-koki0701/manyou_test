@@ -1,0 +1,5 @@
+<h1>タスク詳細</h1>
+  <p>登録者ID: <%= @user.id %></p>
+  <p>名前: <%= @user.name %></p>
+  <p>メールアドレス: <%= @user.email %></p>
+<%= link_to '管理者画面へ', admin_users_path, class:"btn btn-info" %>

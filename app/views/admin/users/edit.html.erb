@@ -1,0 +1,32 @@
+<% if @user.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@user.errors.count, "error") %> prohibited this <%= @user.name %> from being saved:</h2>
+    <ul>
+      <% @user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+<%= form_with(model: @user, local: true, url: admin_user_path(@user)) do |f| %>
+    <div class="account_edit">
+      <table  class="account_creating_form">
+          <tr>
+            <td><%= f.text_field :name, placeholder: "名前"%></td>
+          </tr>
+          <tr>
+            <td><%= f.email_field :email, placeholder: "メールアドレス"  %></td>
+          </tr>
+          <tr>
+            <td><%= f.password_field :password, placeholder: "パスワード" %></td>
+          </tr>
+          <tr>
+            <td><%= f.password_field :password_confirmation, placeholder: "パスワード(再確認)" %></td>
+          </tr>
+          <tr>
+            <%= f.submit button_text, class:"submit"%>
+          </tr>
+      </table>
+    </div>
+<% end %>
+<%= link_to "タスク一覧へ", admin_users_path, class:"btn btn-info to_task_list" %>
