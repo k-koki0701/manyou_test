@@ -1,6 +1,6 @@
 class Admin::UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  # skip_before_action :login_required
+  skip_before_action :login_required
   before_action :admin_user
 
   def index
@@ -14,8 +14,8 @@ class Admin::UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      # flash.now[:notice] = '作成に成功しました'
       redirect_to admin_users_path
+      flash.now[:notice] = '作成に成功しました'
     else
       flash.now[:notice] = '作成に失敗しました'
       render :new
