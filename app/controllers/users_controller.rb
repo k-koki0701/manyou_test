@@ -1,16 +1,19 @@
 class UsersController < ApplicationController
-  skip_before_action :login_required
-  # before_action :fobid_login_user, only: [:show]
-  before_action :logging_in_not_newly_registration, only: [:new, :create]
+  skip_before_action :login_required, only: [:new, :create]
 
   def new
-    @user = User.new
+    if logged_in?
+      redirect_to tasks_path
+    else
+      @user = User.new
+    end
   end
 
   def create
     @user = User.new(user_params)
     if @user.save
-      redirect_to user_path(@user.id)
+      to_login_screen(@user)
+      redirect_to user_path(@user)
     else
       render :new
     end
@@ -19,6 +22,9 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @tasks = @user.tasks
+    if current_user.id != @user.id
+      redirect_to tasks_path
+    end
   end
 
   private
@@ -27,15 +33,4 @@ class UsersController < ApplicationController
                                  :password_confirmation)
   end
 
-  def fobid_login_user
-    if @current_user.id !=  params[:id].to_i
-      redirect_to tasks_path
-    end
-  end
-
-  def logging_in_not_newly_registration
-    if current_user
-      redirect_to tasks_path
-    end
-  end
 end

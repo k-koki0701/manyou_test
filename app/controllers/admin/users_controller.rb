@@ -1,7 +1,7 @@
 class Admin::UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
-  skip_before_action :login_required
   before_action :admin_user
+  before_action :set_user, only: [:show, :edit, :update, :destroy]
+
 
   def index
     @users = User.all.select(:id, :name, :email, :admin).order(created_at: "ASC")

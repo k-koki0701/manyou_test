@@ -5,4 +5,7 @@ module SessionsHelper
   def logged_in?
     current_user.present?
   end
+  def to_login_screen(user)
+    session[:user_id] = user.id
+  end
 end
