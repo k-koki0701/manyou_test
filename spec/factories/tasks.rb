@@ -5,6 +5,7 @@ FactoryBot.define do
     end_period { Date.today }
     status {'未着手'}
     priority {'高'}
+    user
   end
   factory :second_task, class: Task do
     task_name {'task2'}
@@ -12,5 +13,6 @@ FactoryBot.define do
     end_period { Date.today - 1 }
     status {'完了'}
     priority {'中'}
+    user
   end
 end
