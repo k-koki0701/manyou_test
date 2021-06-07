@@ -1,8 +1,8 @@
 require 'rails_helper'
-RSpec.describe 'ユーザ登録・ログイン・ログアウト機能・管理画面テスト', type: :system do
-  describe 'ユーザ登録のテスト' do
-    context 'ユーザ登録がなくログインしていない場合' do
-      it 'ユーザ新規登録のテスト' do
+RSpec.describe 'ユーザ機能', type: :system do
+  describe 'ユーザ登録' do
+    context 'ユーザ登録がない場合' do
+      it 'ユーザ新規登録できる' do
         visit new_user_path
         fill_in 'user[name]', with: 'user'
         fill_in 'user[email]', with: 'user@example.com'
@@ -11,21 +11,21 @@ RSpec.describe 'ユーザ登録・ログイン・ログアウト機能・管理�
         click_on '作成'
         expect(page).to have_content 'user'
       end
-      it '​ログインしていない時はログイン画面に飛ぶテスト​' do
+      it 'ユーザがログインせずタスク一覧画面に飛ぼうとしたとき、ログイン画面に遷移する​' do
         visit tasks_path
         expect(current_path).to eq new_session_path
       end
     end
   end
 
-  describe 'session機能テスト' do
+  describe 'セッション機能' do
     before do
       @user = FactoryBot.create(:user)
       @second_user = FactoryBot.create(:second_user)
     end
 
-    context "ログインしていない状態でユーザデータがある場合" do
-      it 'ログインができること' do
+    context "ユーザデータがある場合" do
+      it 'ログインができる' do
         visit new_session_path
         fill_in 'session_email', with: @user.email
         fill_in 'session_password', with: @user.password
@@ -42,17 +42,17 @@ RSpec.describe 'ユーザ登録・ログイン・ログアウト機能・管理�
         click_button('log in')
       end
 
-      it '自分の詳細画面に飛べること' do
+      it '自分の詳細画面に飛べる' do
         visit user_path(id: @user.id)
         expect(current_path).to eq user_path(id: @user.id)
       end
 
-      it "一般ユーザが他人の詳細画面に飛ぶとタスク一覧ページに遷移すること" do
+      it "一般ユーザが他人の詳細画面に飛ぶとタスク一覧ページに遷移する" do
         visit user_path(@second_user.id)
         expect(page).to have_content 'タスク一覧'
       end
 
-      it "ログイン画面に戻る" do
+      it "ログアウトができる" do
         visit user_path(id: @user.id)
         click_on 'ログアウト'
         expect(page).to have_content 'ログイン'
@@ -60,9 +60,9 @@ RSpec.describe 'ユーザ登録・ログイン・ログアウト機能・管理�
     end
   end
 
-  describe "管理画面のテスト" do
-    context "管理ユーザ作成" do
-      it "管理者は管理画面にアクセスできること" do
+  describe "管理画面" do
+    context "管理ユーザの作成" do
+      it "管理者は管理画面にアクセスできる" do
         FactoryBot.create(:second_user)
         visit new_session_path
         fill_in "session[email]", with: "admin@example.com"
