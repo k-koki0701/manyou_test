@@ -5,5 +5,9 @@
   <p>終了期限: <%= @task.end_period.strftime("%Y-%m-%d") %></p>
   <p>ステータス: <%= @task.status %></p>
   <p>優先順位: <%= @task.priority %></p>
+  <ラベル一覧><br>
+  <% @task.labels.each do |label| %>
+    <p><%= label.name %></p>
+  <% end %>
 </div>
 <%= link_to "タスク一覧へ", tasks_path, class:"btn btn-info to_task_list" %>

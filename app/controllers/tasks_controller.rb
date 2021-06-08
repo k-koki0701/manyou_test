@@ -13,6 +13,8 @@ class TasksController < ApplicationController
       @tasks = @tasks.search_task_name("%#{params[:task_name]}%")
     elsif params[:status].present?
       @tasks = @tasks.search_status(params[:status])
+    elsif params[:label_id].present?
+      @tasks = @tasks.joins(:labels).where(labels: { id: params[:label_id] })
     else
       @tasks = current_user.tasks.order(created_at: "DESC")
     end
@@ -56,7 +58,7 @@ class TasksController < ApplicationController
 
   private
   def task_params
-    params.require(:task).permit(:task_name, :task_detail, :end_period, :status, :priority)
+    params.require(:task).permit(:task_name, :task_detail, :end_period, :status, :priority, { label_ids: [] })
   end
 
   def set_task
